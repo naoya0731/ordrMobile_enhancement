@@ -6,7 +6,50 @@ import Foundation
 extension CIImage {
     /// Applies an AdaptiveThresholding filter to the image, which enhances the image and makes it completely gray scale
     func applyingAdaptiveThreshold() -> UIImage? {
-        guard let colorKernel = CIColorKernel(source:
+        let dilateSize: CGFloat = 4
+        guard let dilateKernel = CIKernel(source:
+            """
+            kernel vec4 blur (sampler image, float dilateSize) {
+                vec2 current = destCoord();
+
+                vec4 c = sample(image, samplerTransform(image, current));
+                for (float i = -dilateSize; i <= dilateSize; i++)
+                    for (float j = -dilateSize; j <= dilateSize; j++)
+                        c = max(c, sample(image, samplerTransform(image, current + vec2(i, j))));
+
+                return c;
+            }
+            """
+            ) else { return nil }
+        
+        guard let dilatedImage = dilateKernel.apply(extent: self.extent.insetBy(dx: -dilateSize, dy: -dilateSize), roiCallback: { (index: Int32, rect: CGRect) -> CGRect in
+            return rect.insetBy(dx: -dilateSize, dy: -dilateSize)
+        }, arguments: [self, CGFloat(dilateSize)]) else { return nil }
+        
+        let medianImage = dilatedImage.applyingFilter("CIMedianFilter")
+        
+        guard let absdiffKernel = CIKernel(source:
+            """
+            kernel vec4 blur (sampler image, sampler background) {
+                vec2 current = destCoord();
+
+                vec4 c = sample(image, samplerTransform(image, current));
+                vec4 b = sample(background, samplerTransform(background, current));
+
+                return vec4(1.0, 1.0, 1.0, 1.0) - abs(c - b);
+            }
+            """
+            ) else { return nil }
+
+        guard let absdiffImage = absdiffKernel.apply(extent: self.extent, roiCallback: { (index: Int32, rect: CGRect) -> CGRect in
+            return rect
+        }, arguments: [self, medianImage]) else { return nil }
+        
+        let _c = CIContext(options: nil).createCGImage(absdiffImage, from: absdiffImage.extent)!
+
+        let firstInputEdge = 0.87
+        let secondInputEdge = 0.95
+        guard let thresholdKernel = CIColorKernel(source:
             """
             kernel vec4 color(__sample pixel, float inputEdgeO, float inputEdge1)
             {
@@ -17,21 +60,13 @@ extension CIImage {
             """
             ) else { return nil }
         
-        let firstInputEdge = 0.25
-        let secondInputEdge = 0.75
+        guard let thresholdImage = thresholdKernel.apply(extent: absdiffImage.extent, arguments: [absdiffImage, firstInputEdge, secondInputEdge]) else { return nil }
         
-        let arguments: [Any] = [self, firstInputEdge, secondInputEdge]
+        let _d = CIContext(options: nil).createCGImage(thresholdImage, from: thresholdImage.extent)!
         
-        guard let enhancedCIImage = colorKernel.apply(extent: self.extent, arguments: arguments) else { return nil }
+        let filteredImage = thresholdImage.applyingFilter("CIColorControls", parameters: [kCIInputSaturationKey: 1, kCIInputBrightnessKey: 0, kCIInputContrastKey: 1])
         
-        let filter = CIFilter(name: "CIColorControls")
-        filter?.setValue(enhancedCIImage, forKey: kCIInputImageKey)
-        filter?.setValue(1, forKey: "inputSaturation")
-        filter?.setValue(0, forKey: "inputBrightness")
-        filter?.setValue(1, forKey: "inputContrast")
-        let filteredImage = filter?.outputImage
-        
-        if let cgImage = CIContext(options: nil).createCGImage(filteredImage!, from: filteredImage!.extent) {
+        if let cgImage = CIContext(options: nil).createCGImage(filteredImage, from: filteredImage.extent) {
             return UIImage(cgImage: cgImage)
         } else {
             return nil
@@ -39,8 +74,8 @@ extension CIImage {
     }
 }
 
-var ok_image = UIImage(named: "ok.jpg")
+var ok_image = UIImage(named: "ok_cropped.jpg")
 var ok_enhancedImage = CIImage(image: ok_image!)!.applyingAdaptiveThreshold()
 
-var issue_image = UIImage(named: "issue.jpg")
+var issue_image = UIImage(named: "issue_cropped.jpg")
 var issue_enhancedImage = CIImage(image: issue_image!)!.applyingAdaptiveThreshold()
