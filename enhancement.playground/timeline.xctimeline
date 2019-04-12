@@ -3,12 +3,29 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/nf/Desktop/sources/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=5&amp;CharacterRangeLoc=1548&amp;EndingColumnNumber=13&amp;EndingLineNumber=41&amp;StartingColumnNumber=8&amp;StartingLineNumber=41&amp;Timestamp=576735129.68627"
+         documentLocation = "file:///Users/hiromu/Desktop/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=5&amp;CharacterRangeLoc=3262&amp;EndingColumnNumber=13&amp;EndingLineNumber=76&amp;StartingColumnNumber=8&amp;StartingLineNumber=76&amp;Timestamp=576748234.383453"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/nf/Desktop/sources/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=13&amp;CharacterRangeLoc=1588&amp;EndingColumnNumber=21&amp;EndingLineNumber=42&amp;StartingColumnNumber=8&amp;StartingLineNumber=42&amp;Timestamp=576735129.686466"
+         documentLocation = "file:///Users/hiromu/Desktop/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=13&amp;CharacterRangeLoc=3310&amp;EndingColumnNumber=21&amp;EndingLineNumber=77&amp;StartingColumnNumber=8&amp;StartingLineNumber=77&amp;Timestamp=576748234.384793"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/hiromu/Desktop/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=16&amp;CharacterRangeLoc=3307&amp;EndingColumnNumber=21&amp;EndingLineNumber=77&amp;StartingColumnNumber=5&amp;StartingLineNumber=77&amp;Timestamp=576748234.384892"
+         lockedSize = "{907, 429}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/hiromu/Desktop/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=19&amp;CharacterRangeLoc=3440&amp;EndingColumnNumber=24&amp;EndingLineNumber=80&amp;StartingColumnNumber=5&amp;StartingLineNumber=80&amp;Timestamp=576748234.3849781"
+         lockedSize = "{904, 403}"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/hiromu/Desktop/ordrMobile_enhancement/enhancement.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=3253&amp;EndingColumnNumber=0&amp;EndingLineNumber=75&amp;StartingColumnNumber=0&amp;StartingLineNumber=75&amp;Timestamp=576748234.386061"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
