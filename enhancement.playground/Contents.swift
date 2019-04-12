@@ -40,7 +40,7 @@ extension CIImage {
 }
 
 var ok_image = UIImage(named: "ok.jpg")
-var ok_enhancedImage = CIImage(image: image!)!.applyingAdaptiveThreshold()
+var ok_enhancedImage = CIImage(image: ok_image!)!.applyingAdaptiveThreshold()
 
 var issue_image = UIImage(named: "issue.jpg")
-var issue_enhancedImage = CIImage(image: image!)!.applyingAdaptiveThreshold()
+var issue_enhancedImage = CIImage(image: issue_image!)!.applyingAdaptiveThreshold()
